@@ -6,25 +6,34 @@ from typing import Optional
 class DataLoader:
 
     REQUIRED_COLUMNS = [
-        'Order_ID', 'Order_Date', 'Product', 'Category',
-        'Quantity', 'Price', 'Revenue', 'Region', 'Customer_Type'
+        "Order_ID",
+        "Order_Date",
+        "Product",
+        "Category",
+        "Quantity",
+        "Price",
+        "Revenue",
+        "Region",
+        "Customer_Type",
     ]
 
     @staticmethod
     def load_data(file_path: str = None, uploaded_file=None) -> Optional[pd.DataFrame]:
         try:
             if uploaded_file is not None:
-                if uploaded_file.name.endswith('.csv'):
+                if uploaded_file.name.endswith(".csv"):
                     df = pd.read_csv(uploaded_file)
-                elif uploaded_file.name.endswith(('.xlsx', '.xls')):
+                elif uploaded_file.name.endswith((".xlsx", ".xls")):
                     df = pd.read_excel(uploaded_file)
                 else:
-                    st.error("Unsupported file format. Please upload CSV or Excel files.")
+                    st.error(
+                        "Unsupported file format. Please upload CSV or Excel files."
+                    )
                     return None
             elif file_path:
-                if file_path.endswith('.csv'):
+                if file_path.endswith(".csv"):
                     df = pd.read_csv(file_path)
-                elif file_path.endswith(('.xlsx', '.xls')):
+                elif file_path.endswith((".xlsx", ".xls")):
                     df = pd.read_excel(file_path)
                 else:
                     st.error("Unsupported file format. Please use CSV or Excel files.")
@@ -60,17 +69,17 @@ class DataLoader:
     @staticmethod
     def get_data_summary(df: pd.DataFrame) -> dict:
         summary = {
-            'total_records': len(df),
-            'columns': list(df.columns),
-            'memory_usage': f"{df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB",
+            "total_records": len(df),
+            "columns": list(df.columns),
+            "memory_usage": f"{df.memory_usage(deep=True).sum() / 1024 / 1024:.2f} MB",
         }
 
-        if 'Order_Date' in df.columns:
+        if "Order_Date" in df.columns:
             try:
-                dates = pd.to_datetime(df['Order_Date'], errors='coerce')
-                summary['date_range'] = f"{dates.min()} to {dates.max()}"
-                summary['date_span_days'] = (dates.max() - dates.min()).days
+                dates = pd.to_datetime(df["Order_Date"], errors="coerce")
+                summary["date_range"] = f"{dates.min()} to {dates.max()}"
+                summary["date_span_days"] = (dates.max() - dates.min()).days
             except:
-                summary['date_range'] = "Unable to parse dates"
+                summary["date_range"] = "Unable to parse dates"
 
         return summary

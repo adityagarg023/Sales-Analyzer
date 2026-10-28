@@ -8,9 +8,9 @@ from .analytics import SalesAnalytics
 from .forecasting import SalesForecaster
 
 __all__ = [
-    'DataLoader',
-    'DataCleaner',
-    'FeatureEngineer',
-    'SalesAnalytics',
-    'SalesForecaster'
+    "DataLoader",
+    "DataCleaner",
+    "FeatureEngineer",
+    "SalesAnalytics",
+    "SalesForecaster",
 ]
